@@ -285,7 +285,7 @@ button:focus {
 	padding-bottom: 10px;
 }
 .player {
-	background: url(/images/loading.gif) no-repeat top;
+	background: url(images/loading.gif) no-repeat top;
 	background-size: 30px;
 }
 .spotify-iframe {

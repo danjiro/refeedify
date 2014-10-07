@@ -154,9 +154,9 @@
 				//Grab album cover art from Lastfm API
 				var getAlbumCover =	$http.jsonp("http:" + "//ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=45c831736b907e7eeae80171259181a6&artist=" + encodeURIComponent(sanitizedArtist) + "&album=" + encodeURIComponent(sanitizedTitle) + "&autocorrect=1&format=json&callback=JSON_CALLBACK").then(function(lastfm) {
 						if (lastfm.data.album) {
-							review.albumCoverArtUrl = lastfm.data.album.image[3]['#text'] ? lastfm.data.album.image[3]['#text'] : '/images/no-cover-art.png';
+							review.albumCoverArtUrl = lastfm.data.album.image[3]['#text'] ? lastfm.data.album.image[3]['#text'] : 'images/no-cover-art.png';
 						}
-						else {review.albumCoverArtUrl = '/images/no-cover-art.png';}						
+						else {review.albumCoverArtUrl = 'images/no-cover-art.png';}						
 				});
 
 				//Grab Spotify album URL (Spotify doesn't support JSONP)
@@ -167,7 +167,7 @@
 
 				//Do a second pass of missing album covers
 				$q.all([getAlbumCover, getSpotifyUrl]).then(function(){
-					if ((review.albumCoverArtUrl == '/images/no-cover-art.png' || !review.albumCoverArtUrl) && review.spotifyLink) {
+					if ((review.albumCoverArtUrl == 'images/no-cover-art.png' || !review.albumCoverArtUrl) && review.spotifyLink) {
 						$http.jsonp("http:" + "//embed.spotify.com/oembed/?url=" + review.spotifyLink + "&callback=JSON_CALLBACK").success(function(data) {
 							review.albumCoverArtUrl = data.thumbnail_url;
 						});
@@ -209,7 +209,6 @@
 		$scope.populateSelectedAlbum = function($index, panel) {
 			var currentItem = $scope.selectedFeedData[$index];
 			angular.extend(panel, currentItem);
-			console.log($scope.playThisAlbum)
 		}
 
 		//Close player panel & close review panel
@@ -235,7 +234,6 @@
 
 		//Alerts that shows when selecting a default feed
 		$scope.alerts = [];
-		console.log($scope.selectedFeed)
 
 		//Get entire feed list
 		$scope.settings = feedList.list();
