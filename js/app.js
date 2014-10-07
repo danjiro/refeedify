@@ -57,14 +57,7 @@
 				  seperator: "***",
 				  canonical: "rolling-stone",
 				  ratings: false
-				},
-				{
-				  name: "CoS",
-				  url: "http://consequenceofsound.net/category/reviews/album-reviews/feed/",
-				  seperator: "–",
-				  canonical: "consequence-of-sound",
-				  ratings: false
-				}					
+				}				
   			],
 			selectedFeedSource: {
 				  name: "Pitchfork",
