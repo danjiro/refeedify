@@ -1,0 +1,55 @@
+    <!-- FEED CONTROLLER -->
+
+      <!-- PLAYER PANEL -->
+      <div class="player-menu" ng-class="panels.player.open ? 'player-open' : ''">
+        <div class="player-close" ng-click="closeAllPanels()"><span class="close-text">Close</span><span class="glyphicon glyphicon-remove"></span></div>
+        <div ng-show="playThisAlbum.hasSelectedAlbum">
+          <div class="player-album-cover"><img src="/images/no-cover-art.png" ng-src="{{playThisAlbum.albumCoverArtUrl}}"></div>
+          <div class="player-album-details">
+            <h3>{{playThisAlbum.albumArtist}}</h3>
+            <h4>{{playThisAlbum.albumTitle}}</h4>
+          </div>
+          <div class="player" ng-show="playThisAlbum.spotifyLink">
+            <iframe class="spotify-iframe" ng-src="{{playThisAlbum.spotifyEmbedUrl}}" frameborder="0" allowtransparency="true"></iframe>
+          </div>
+          <div class="player-no-album" ng-hide="playThisAlbum.spotifyLink"><h2><i class="fa fa-exclamation-triangle"></i></h2><h4>Sorry, we couldn't find this album. Try searching for it directly in Spotify!</h4></div>
+        </div>
+        <h4 class="bordered-text" ng-hide="playThisAlbum.hasSelectedAlbum">Select an album to play</h4>
+      </div>
+
+      <!-- FEED AREA -->
+      <div class="content-wrapper container-fluid" ng-class="{'content-player-open' : panels.player.open, 'content-review-open' : panels.review.open}">
+        <div masonry load-images="true" masonry-options="{transitionDuration: 0}" class="row feed-row">
+          <div class="masonry-brick col-xs-12 col-sm-4 col-lg-3 feed-item-animate" ng-repeat="review in selectedFeedData">
+            <div class="feed-item">
+              <div class="cover-art" ng-click="loadSpotifyPlayer($index, playThisAlbum)">
+                <div class="play-album" ng-show="review.spotifyLink"><i class="fa fa-play-circle"></i></div>
+                <img class="img-responsive" src="/images/no-cover-art.png" ng-src="{{review.albumCoverArtUrl}}" alt="">
+              </div>
+              <h3>{{review.albumArtist}}</h3>
+              <h4>{{review.albumTitle}}</h4>
+              <h4 ng-show="selectedFeed.ratings" ng-class="{red: (review.albumRating >= 8.0)}">Rating: {{review.albumRating}}</h4>
+              <h5>{{review.publishedDate}}</h5>
+              <p>{{review.contentSnippet}}</p>
+              <a ng-click="openReview($index, thisAlbumsReview)">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REVIEW PANEL -->
+      <div class="review-panel" ng-class="panels.review.open ? 'review-panel-open' : ''">
+        <div class="player-close" ng-click="closeAllPanels()"><span class="close-text">Close</span><span class="glyphicon glyphicon-remove"></span></div>
+        <div class="review-album-info">
+          <img src="/images/no-cover-art.png" ng-src="{{thisAlbumsReview.albumCoverArtUrl}}">
+          <div class="review-album-info-right">
+            <h3>{{thisAlbumsReview.albumArtist}}</h3>
+            <h4>{{thisAlbumsReview.albumTitle}}</h4>
+            <h5 ng-show="thisAlbumsReview.author">Written by: {{thisAlbumsReview.author}}</h4>
+            <h4 ng-show="selectedFeed.ratings" ng-class="{red: (thisAlbumsReview.albumRating >= 8.0)}">Rating: {{thisAlbumsReview.albumRating}}</h4>
+            <a href="{{thisAlbumsReview.link}}" target="_blank" alt="{{thisAlbumsReview.albumArtist}} - {{thisAlbumsReview.albumTitle}}">Read full review</a>            
+          </div>
+        </div>
+        <div class="review-content" ng-bind-html="thisAlbumsReview.content">
+        </div>
+      </div>

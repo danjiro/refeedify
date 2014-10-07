@@ -1,0 +1,35 @@
+{
+  "name": "Refeedify",
+  "version": "1.0.0",
+  "authors": [
+    "Danny"
+  ],
+  "description": "Music reviews app",
+  "main": "app.js",
+  "keywords": [
+    "music",
+    "reviews",
+    "spotify",
+    "rss",
+    "feeds"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.2.18",
+    "angular-route": "~1.2.18",
+    "angular-sanitize": "~1.2.18",
+    "jquery": "~2.1.1",
+    "angular-masonry": "~0.8.1"
+  },
+  "private": true,
+  "resolutions": {
+    "jquery": "~2.1.1"
+  }
+}
