@@ -4,8 +4,8 @@
 	reviewsApp.config(['$httpProvider', '$routeProvider', '$locationProvider', function ($httpProvider, $routeProvider, $locationProvider) {
 	    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
-	    $routeProvider.when('/feed/:id', {templateUrl: '/partials/feed.html', controller: 'FeedCtrl'})
-	    			  .when('/', {templateUrl: '/partials/feed.html', controller: 'FeedCtrl'})
+	    $routeProvider.when('/feed/:id', {templateUrl: 'partials/feed.html', controller: 'FeedCtrl'})
+	    			  .when('/', {templateUrl: 'partials/feed.html', controller: 'FeedCtrl'})
 	    			  .otherwise({redirectTo: '/'});
 
 	    // $locationProvider.html5Mode(true);
