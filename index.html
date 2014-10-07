@@ -60,7 +60,7 @@
         <ul class="dropdown" ng-class="panels.settings.open ? 'settings-active' : ''">
           <li><span class="settings-heading">Choose your feed:</span></li>
           <li ng-repeat="feedSource in settings.feedSources">
-            <a ng-href="/#/feed/{{feedSource.canonical}}" >{{feedSource.name}}</a>
+            <a ng-href="#/feed/{{feedSource.canonical}}" >{{feedSource.name}}</a>
             <i class="fa fa-heart favorite" ng-click="setAsFavorite(feedSource)" ng-class="{blue: feedSource.name == userOptions.name}"></i>
           </li>
           <alert class="fav-alert" type='success' ng-repeat="alert in alerts">{{alert.msg}}</alert>

@@ -4,7 +4,7 @@
       <div class="player-menu" ng-class="panels.player.open ? 'player-open' : ''">
         <div class="player-close" ng-click="closeAllPanels()"><span class="close-text">Close</span><span class="glyphicon glyphicon-remove"></span></div>
         <div ng-show="playThisAlbum.hasSelectedAlbum">
-          <div class="player-album-cover"><img src="/images/no-cover-art.png" ng-src="{{playThisAlbum.albumCoverArtUrl}}"></div>
+          <div class="player-album-cover"><img src="images/no-cover-art.png" ng-src="{{playThisAlbum.albumCoverArtUrl}}"></div>
           <div class="player-album-details">
             <h3>{{playThisAlbum.albumArtist}}</h3>
             <h4>{{playThisAlbum.albumTitle}}</h4>
@@ -24,7 +24,7 @@
             <div class="feed-item">
               <div class="cover-art" ng-click="loadSpotifyPlayer($index, playThisAlbum)">
                 <div class="play-album" ng-show="review.spotifyLink"><i class="fa fa-play-circle"></i></div>
-                <img class="img-responsive" src="/images/no-cover-art.png" ng-src="{{review.albumCoverArtUrl}}" alt="">
+                <img class="img-responsive" src="images/no-cover-art.png" ng-src="{{review.albumCoverArtUrl}}" alt="">
               </div>
               <h3>{{review.albumArtist}}</h3>
               <h4>{{review.albumTitle}}</h4>
@@ -41,7 +41,7 @@
       <div class="review-panel" ng-class="panels.review.open ? 'review-panel-open' : ''">
         <div class="player-close" ng-click="closeAllPanels()"><span class="close-text">Close</span><span class="glyphicon glyphicon-remove"></span></div>
         <div class="review-album-info">
-          <img src="/images/no-cover-art.png" ng-src="{{thisAlbumsReview.albumCoverArtUrl}}">
+          <img src="images/no-cover-art.png" ng-src="{{thisAlbumsReview.albumCoverArtUrl}}">
           <div class="review-album-info-right">
             <h3>{{thisAlbumsReview.albumArtist}}</h3>
             <h4>{{thisAlbumsReview.albumTitle}}</h4>
