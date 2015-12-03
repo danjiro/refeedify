@@ -14,7 +14,7 @@
 	reviewsApp.factory('feedAjaxService', ['$http', function($http) {
 		return {
 			getFeedData: function(feedUrl) {
-				return $http.jsonp("http:" + "//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=50&callback=JSON_CALLBACK&q=" + encodeURI(feedUrl));
+				return $http.jsonp("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feed%20where%20url%3D'" + encodeURI(feedUrl) + '&format=json&diagnostics=true&callback=JSON_CALLBACK");
 			}
 		}
 	}]);
@@ -107,8 +107,8 @@
 		$scope.selectedFeed = feedList.getSelectedFeed($routeParams.id);
 		//Store selected feed's data in here and make ajax call to grab RSS data
 		$scope.selectedFeedData = [];
-		feedAjaxService.getFeedData($scope.selectedFeed.url).then(function(result) {
-			$scope.selectedFeedData = result.data.responseData.feed.entries;
+		feedAjaxService.getFeedData($scope.selectedFeed.url).then(function(data) {
+			$scope.selectedFeedData = data.query.results.item;
 			$scope.populateFeed();
 		});
 
