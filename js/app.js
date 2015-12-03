@@ -108,7 +108,9 @@
 		//Store selected feed's data in here and make ajax call to grab RSS data
 		$scope.selectedFeedData = [];
 		feedAjaxService.getFeedData($scope.selectedFeed.url).then(function(data) {
+			console.log(data);
 			$scope.selectedFeedData = data.query.results.item;
+			console.log($scope.selectedFeedData);
 			$scope.populateFeed();
 		});
 
