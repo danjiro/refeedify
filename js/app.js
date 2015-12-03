@@ -14,7 +14,7 @@
 	reviewsApp.factory('feedAjaxService', ['$http', function($http) {
 		return {
 			getFeedData: function(feedUrl) {
-				return $http.jsonp("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feed%20where%20url%3D'" + encodeURI(feedUrl) + '&format=json&diagnostics=true&callback=JSON_CALLBACK");
+				return $http.jsonp("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20feed%20where%20url%3D'" + encodeURI(feedUrl) + "'&format=json&diagnostics=true&callback=JSON_CALLBACK");
 			}
 		}
 	}]);
