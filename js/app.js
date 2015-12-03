@@ -109,7 +109,7 @@
 		$scope.selectedFeedData = [];
 		feedAjaxService.getFeedData($scope.selectedFeed.url).then(function(data) {
 			console.log(data);
-			$scope.selectedFeedData = data.query.results.item;
+			$scope.selectedFeedData = data.data.query.results.item;
 			console.log($scope.selectedFeedData);
 			$scope.populateFeed();
 		});
