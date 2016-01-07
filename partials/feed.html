@@ -30,7 +30,7 @@
               <h4>{{review.albumTitle}}</h4>
               <h4 ng-show="selectedFeed.ratings" ng-class="{red: (review.albumRating >= 8.0)}">Rating: {{review.albumRating}}</h4>
               <h5>{{review.publishedDate | date:'medium'}}</h5>
-              <div ng-bind-html="review.description"></div>
+              <div ng-bind-html="review.description | limitTo:100"></div>
               <a ng-click="openReview($index, thisAlbumsReview)">Read More</a>
             </div>
           </div>
