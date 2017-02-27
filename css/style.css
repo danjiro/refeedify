@@ -415,6 +415,9 @@ button:focus {
 .review-album-info-right > h3:first-child {
 	margin-top:0;
 }
+.link {
+	cursor: pointer;
+}
 @media (min-width: 768px) {
 	.nav {
 		text-align: left;
@@ -477,4 +480,9 @@ button:focus {
 	.review-album-info img {
 		width: 50%;
 	}
+}
+
+.review-desc {
+    max-height: 222px;
+    overflow: hidden;
 }

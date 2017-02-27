@@ -116,6 +116,7 @@
 
 		$scope.populateFeed = function() {
 			angular.forEach($scope.selectedFeedData, function(review) {
+				console.log($scope.selectedFeed);
 
 				//Seperate album artist and title from the review's title
 				var seperator = $scope.selectedFeed.seperator;
@@ -135,7 +136,7 @@
 			        // var query = encodeURIComponent('select content from html where url="' + review.link + '" and compat="html5" and xpath=\'//div[@id="main"]/div[@id="content"]/div[@itemprop="description"]/span[@id="rating"]/span[@itemprop="ratingValue"]\'')
 
 			        // Create YQL query to get span containing score
-			        var query = encodeURIComponent('select content from html where url="' + review.link + '" and compat="html5" and xpath=\'//div[@id="main"]/ul/li/div[@class="info"]/span\''),
+			        var query = encodeURIComponent('select content from html where url="' + review.link + '" and compat="html5" and xpath=\'//div[@class="score-circle"]/span\''),
 			            
 		            // JSONP url for YQL query
 		            yqlurl = 'http://query.yahooapis.com/v1/public/yql?q=' + query + '&format=json&callback=JSON_CALLBACK';
@@ -146,28 +147,36 @@
 			 
 			    };
 
-				//Grab album cover art from Lastfm API
-				var getAlbumCover =	$http.jsonp("http:" + "//ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=45c831736b907e7eeae80171259181a6&artist=" + encodeURIComponent(sanitizedArtist) + "&album=" + encodeURIComponent(sanitizedTitle) + "&autocorrect=1&format=json&callback=JSON_CALLBACK").then(function(lastfm) {
-						if (lastfm.data.album) {
-							review.albumCoverArtUrl = lastfm.data.album.image[3]['#text'] ? lastfm.data.album.image[3]['#text'] : 'images/no-cover-art.png';
+			  if ($scope.selectedFeed.canonical === 'pitchfork') {
+			  	review.albumCoverArtUrl = review.enclosure.url;
+			  }
+
+			  else {
+					//Grab album cover art from Lastfm API
+					var getAlbumCover =	$http.jsonp("http:" + "//ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=45c831736b907e7eeae80171259181a6&artist=" + encodeURIComponent(sanitizedArtist) + "&album=" + encodeURIComponent(sanitizedTitle) + "&autocorrect=1&format=json&callback=JSON_CALLBACK").then(function(lastfm) {
+							if (lastfm.data.album) {
+								review.albumCoverArtUrl = lastfm.data.album.image[3]['#text'] ? lastfm.data.album.image[3]['#text'] : 'images/no-cover-art.png';
+							}
+							else {review.albumCoverArtUrl = 'images/no-cover-art.png';}						
+					});
+			  }
+
+					//Grab Spotify album URL (Spotify doesn't support JSONP)
+					var getSpotifyUrl = $http.get("http:" + "//ws.spotify.com/search/1/album?q=" + encodeURIComponent(sanitizedArtist + " " + sanitizedTitle)).then(function(spotify) {
+						review.spotifyLink = spotify.data.albums.length ? spotify.data.albums[0].href : false;
+
+					});
+
+					//Do a second pass of missing album covers
+					$q.all([getAlbumCover, getSpotifyUrl]).then(function(){
+						if ((review.albumCoverArtUrl == 'images/no-cover-art.png' || !review.albumCoverArtUrl) && review.spotifyLink) {
+							$http.jsonp("http:" + "//embed.spotify.com/oembed/?url=" + review.spotifyLink + "&callback=JSON_CALLBACK").success(function(data) {
+								review.albumCoverArtUrl = data.thumbnail_url;
+							});
 						}
-						else {review.albumCoverArtUrl = 'images/no-cover-art.png';}						
-				});
+					});
 
-				//Grab Spotify album URL (Spotify doesn't support JSONP)
-				var getSpotifyUrl = $http.get("http:" + "//ws.spotify.com/search/1/album?q=" + encodeURIComponent(sanitizedArtist + " " + sanitizedTitle)).then(function(spotify) {
-					review.spotifyLink = spotify.data.albums.length ? spotify.data.albums[0].href : false;
 
-				});
-
-				//Do a second pass of missing album covers
-				$q.all([getAlbumCover, getSpotifyUrl]).then(function(){
-					if ((review.albumCoverArtUrl == 'images/no-cover-art.png' || !review.albumCoverArtUrl) && review.spotifyLink) {
-						$http.jsonp("http:" + "//embed.spotify.com/oembed/?url=" + review.spotifyLink + "&callback=JSON_CALLBACK").success(function(data) {
-							review.albumCoverArtUrl = data.thumbnail_url;
-						});
-					}
-				});
 
 				//Get pitchfork album rating
 				if($scope.selectedFeed.ratings) {
